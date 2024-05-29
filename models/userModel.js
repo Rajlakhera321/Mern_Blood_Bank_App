@@ -13,14 +13,14 @@ const userSchema = new Schema({
             return false;
         }
     },
-    organization: {
+    organisationName: {
         type: Schema.Types.String,
         require: function () {
             if (this.role === 'organization') return true;
             return false;
         }
     },
-    hospital: {
+    hospitalName: {
         type: Schema.Types.String,
         require: function () {
             if (this.role === 'hospital') return true;

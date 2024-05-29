@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import InputType from "../form/InputType";
 import API from "../../../services/API";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const Modal = () => {
     const [inventoryType, setInventoryType] = useState("in");
     const [bloodGroup, setBloodGroup] = useState("");
     const [quantity, setQuantity] = useState(0);
-    const [donarEmail, setDonarEmail] = useState("");
-    const {user} = useSelector(state => state.auth);
+    const [email, setEmail] = useState("");
+    const { user } = useSelector(state => state.auth);
 
     useEffect(() => {
-        if(inventoryType == 'out'){
-            setDonarEmail(user?.email || "")
+        if (inventoryType === 'out') {
+            setEmail(user?.email || "")
         }
-    },[inventoryType,user])
-    
+    }, [inventoryType, user])
+
     const handleModalSubmit = async () => {
         try {
-            if(!bloodGroup || !quantity){
+            if (!bloodGroup || !quantity) {
                 return alert("Please Provide All Fields")
             }
-            const {data} = await API.post('/inventory/create-inventory',{
-                donarEmail,
-                email: user?.email,
+            const { data } = await API.post('/inventory/create-inventory', {
+                email,
                 organisation: user?._id,
                 inventoryType,
                 quantity,
                 bloodGroup
             })
-            if(data?.success){
+            if (data?.success) {
                 alert('New Record Created');
                 window.location.reload();
             }
@@ -76,7 +75,7 @@ const Modal = () => {
                                 <option value={'B+'}>B+</option>
                                 <option value={'B-'}>B-</option>
                             </select>
-                            <InputType labelText={'Donar Email'} labelFor={'donarEmail'} inputType={'email'} value={donarEmail} onChange={(e) => setDonarEmail(e.target.value)} />
+                            <InputType labelText={'Donar Email'} labelFor={'donarEmail'} inputType={'email'} value={email} onChange={(e) => setEmail(e.target.value)} />
                             <InputType labelText={'Quantity (ML)'} labelFor={'quantity'} inputType={'Number'} value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                         </div>
                         <div className="modal-footer">

@@ -16,7 +16,6 @@ const Form = ({ formType, submitBtn, formTitle }) => {
   return (
     <div>
       <form onSubmit={(e) => {
-        console.log(formType, "formtype");
         if (formType === 'login') return handleLogin(e, email, password, role);
         else if (formType === 'register') return handleRegister(e, name, role, email, password, organisationName, hospitalName, address, phone)
       }}>

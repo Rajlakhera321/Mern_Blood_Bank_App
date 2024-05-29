@@ -13,5 +13,10 @@ export const usrMenu = [
         name: 'Hospital',
         path: "/hospital",
         icon: "fa-solid fa-hospital"
+    },
+    {
+        name: 'Organsiation',
+        path: "/organisation",
+        icon: "fa-sharp fa-solid fa-building-ngo"
     }
 ]

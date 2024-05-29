@@ -8,7 +8,6 @@ const registerController = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ success: false, message: "User Already Exists" });
         }
-        console.log(req.body.password,"password")
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(req.body.password, salt);
         req.body.password = hashPassword;
@@ -29,8 +28,8 @@ const loginController = async (req, res) => {
             console.log("data getting here");
             return res.status(402).json({ success: false, message: "User Not Found" });
         }
-        if(existingUser.role !== req.body.role){
-            return res.status(500).json({success: false, message: "Role doesn't match"});
+        if (existingUser.role !== req.body.role) {
+            return res.status(500).json({ success: false, message: "Role doesn't match" });
         }
         const comparePassword = await bcrypt.compare(req.body.password, existingUser.password);
         if (!comparePassword) {

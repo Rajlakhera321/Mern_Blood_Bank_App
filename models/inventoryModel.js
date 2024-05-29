@@ -15,7 +15,7 @@ const inventorySchema = new Schema({
         type: Number,
         require: [true, 'blood quantity is required']
     },
-    donarEmail: {
+    email: {
         type: String,
         reqire: [true, "Donar email is required"]
     },
@@ -34,9 +34,9 @@ const inventorySchema = new Schema({
     donar: {
         type: Schema.Types.ObjectId,
         ref: 'user',
-        // require: function () {
-        //     return this.inventoryType == "in"
-        // }
+        require: function () {
+            return this.inventoryType == "in"
+        }
     }
 }, { timestamps: true });
 

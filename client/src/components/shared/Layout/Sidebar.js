@@ -1,15 +1,64 @@
 import React from 'react'
-import { usrMenu } from './Menu/userMenu'
+// import { usrMenu } from './Menu/userMenu'
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import '../../../styles/Layout.css';
 
 const Sidebar = () => {
     const location = useLocation();
+
+    const { user } = useSelector(state => state.auth);
     return (
         <div>
             <div className='sidebar'>
                 <div className='menu'>
-                    {usrMenu.map(menu => {
+                    {user?.role === 'organisation' && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/' && 'active'}`}>
+                                <i className='fa-solid fa-warehouse'></i>
+                                <Link to='/'>Inventory</Link>
+                            </div>
+
+                            <div className={`menu-item ${location.pathname === '/donar' && 'active'}`}>
+                                <i className='fa-solid fa-hand-holding-medical'></i>
+                                <Link to='/donar'>donar</Link>
+                            </div>
+
+                            <div className={`menu-item ${location.pathname === '/hospital' && 'active'}`}>
+                                <i className='fa-solid fa-hospital'></i>
+                                <Link to='/hospital'>hospital</Link>
+                            </div>
+                        </>
+                    )}
+
+                    {(user?.role === 'donar' || user?.role === 'hospital') && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/organisation' && 'active'}`}>
+                                <i className='fa-sharp fa-solid fa-building-ngo'></i>
+                                <Link to='/organisation'>organisation</Link>
+                            </div>
+                        </>
+                    )}
+
+                    {user?.role === 'hospital' && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/consumer' && 'active'}`}>
+                                <i className='fa-sharp fa-solid fa-building-ngo'></i>
+                                <Link to='/consumer'>Consumer</Link>
+                            </div>
+                        </>
+                    )}
+
+                    {user?.role === 'donar' && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/donation' && 'active'}`}>
+                                <i className='fa-sharp fa-solid fa-building-ngo'></i>
+                                <Link to='/donation'>Donation</Link>
+                            </div>
+                        </>
+                    )}
+
+                    {/* {usrMenu.map(menu => {
                         const isActive = location.pathname === menu.path;
                         return (
                             <div className={`menu-item ${isActive && 'active'}`} key={menu.name}>
@@ -17,7 +66,7 @@ const Sidebar = () => {
                                 <Link to={menu.path}>{menu.name}</Link>
                             </div>
                         )
-                    })}
+                    })} */}
                 </div>
             </div>
         </div>
